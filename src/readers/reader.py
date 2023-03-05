@@ -7,8 +7,13 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel, NormativeActModel, \
-    DissertationModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    NormativeActModel,
+    DissertationModel,
+)
 from logger import get_logger
 from readers.base import BaseReader
 
@@ -91,7 +96,7 @@ class ArticlesCollectionReader(BaseReader):
         }
 
 
-class NormativeActReader:
+class NormativeActReader(BaseReader):
     """
     Чтение модели нормативного акта.
     """
@@ -115,7 +120,7 @@ class NormativeActReader:
             "publication_year": {5: int},
             "version": {6: int},
             "article_number": {7: int},
-            "edition": {8: date}
+            "edition": {8: date},
         }
 
 
