@@ -54,7 +54,6 @@ class InternetResourceModel(BaseModel):
 
 
 class ArticlesCollectionModel(BaseModel):
-
     """
     Модель сборника статей:
 
@@ -78,3 +77,61 @@ class ArticlesCollectionModel(BaseModel):
     publishing_house: str
     year: int = Field(..., gt=0)
     pages: str
+
+
+class NormativeActModel(BaseModel):
+    """
+    Модель нормативно-правового акта:
+
+    .. code-block::
+
+        NormativeActModel(
+            type="Указ Президента Рос. Федерации",
+            title="О мерах по противодействию коррупции",
+            acceptance_date="19.05.2008",
+            number="815",
+            publication_source="Собрание законодательства Российской Федерации",
+            publication_year=2008,
+            source_number=21,
+            article_number=2429,
+            edition="3.07.2019"
+        )
+    """
+
+    type: str
+    title: str
+    acceptance_date: str
+    number: str
+    publication_source: str
+    publication_year: int = Field(..., gt=0)
+    source_number: int = Field(..., gt=0)
+    article_number: int = Field(..., gt=0)
+    edition_date: Optional[str]
+
+
+class DissertationModel(BaseModel):
+    """
+    Модель диссертации:
+
+    .. code-block::
+
+        DissertationModel(
+            author="Белозеров И.В.",
+            article_title="Религиозная политика Золотой Орды на Руси в XIII - XIV вв.",
+            author_degree="канд.",
+            science_branch="ист. наук",
+            branch_code="07.00.02",
+            city="М.",
+            year=2002,
+            page_count=215,
+        )
+    """
+
+    author: str
+    article_title: str
+    author_degree: str
+    science_branch: str
+    branch_code: str
+    city: str
+    year: int = Field(..., gt=0)
+    page_count: int = Field(..., gt=0)
