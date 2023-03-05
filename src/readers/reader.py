@@ -114,13 +114,13 @@ class NormativeActReader(BaseReader):
         return {
             "type": {0: str},
             "title": {1: str},
-            "accept_date": {2: date},
+            "acceptance_date": {2: date},
             "number": {3: str},
-            "official_source": {4: str},
+            "publication_source": {4: str},
             "publication_year": {5: int},
-            "version": {6: int},
+            "source_number": {6: int},
             "article_number": {7: int},
-            "edition": {8: date},
+            "edition_date": {8: date},
         }
 
 
