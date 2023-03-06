@@ -5,7 +5,14 @@ from string import Template
 
 from pydantic import BaseModel
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    NormativeActModel,
+    DissertationModel,
+)
+
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
 
@@ -103,6 +110,44 @@ class GOSTCollectionArticle(BaseCitationStyle):
         )
 
 
+class GOSTNormativeAct(BaseCitationStyle):
+    """
+    Форматирование для нормативного акта.
+    """
+
+    data: NormativeActModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$title: $type от $accept_date. №$number: в ред. от $edition // $official_source $publication_year"
+        )
+
+    def substitute(self) -> str:
+        logger.info('Форматирование законодательного акта "%s" ...', self.data.title)
+
+        return self.template.substitute(self.data.dict())
+
+
+class GOSTDissertation(BaseCitationStyle):
+    """
+    Форматирование для диссертации.
+    """
+
+    data: DissertationModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$author $title : $degree $field $field_code / $city, $year. - $pages с."
+        )
+
+    def substitute(self) -> str:
+        logger.info('Форматирование диссертации "%s" ...', self.data.article_title)
+
+        return self.template.substitute(self.data.dict())
+
+
 class GOSTCitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
@@ -112,6 +157,8 @@ class GOSTCitationFormatter:
         BookModel.__name__: GOSTBook,
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
+        NormativeActModel.__name__: GOSTNormativeAct,
+        DissertationModel.__name__: GOSTDissertation,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:
