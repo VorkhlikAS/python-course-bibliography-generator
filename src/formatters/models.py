@@ -94,7 +94,7 @@ class NormativeActModel(BaseModel):
             publication_year=2008,
             source_number=21,
             article_number=2429,
-            edition="3.07.2019"
+            edition_date="3.07.2019"
         )
     """
 
